@@ -1,0 +1,21 @@
+<h2>Gépkölcsönző</h2>
+
+<nav>
+  <button (click)="show('machines')">Gépek</button>
+  <button (click)="show('partners')">Partnerek</button>
+  <button (click)="show('transactions')">Kölcsönzések</button>
+</nav>
+
+<hr>
+
+<section *ngIf="selectedView === 'machines'">
+  <app-machines></app-machines>
+</section>
+
+<section *ngIf="selectedView === 'partners'">
+  <app-partners></app-partners>
+</section>
+
+<section *ngIf="selectedView === 'transactions'">
+  <app-transactions></app-transactions>
+</section>

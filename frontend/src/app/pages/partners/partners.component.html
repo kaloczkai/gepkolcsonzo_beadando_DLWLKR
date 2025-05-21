@@ -1,0 +1,51 @@
+<h2>Partnerek</h2>
+
+<div *ngIf="errorMessage" style="color: red; font-weight: bold;">{{ errorMessage }}</div>
+<div *ngIf="successMessage" style="color: green; font-weight: bold;">{{ successMessage }}</div>
+
+<ul>
+  <li *ngFor="let p of partners">
+    <strong>{{ p.name }}</strong> – {{ p.representative }} – Egyenleg: {{ p.balance }} Ft
+    <button (click)="startEditing(p)">Szerkesztés</button>
+  </li>
+</ul>
+
+<!-- Partner szerkesztése -->
+<div *ngIf="editingPartnerId !== null">
+  <h3>Partner szerkesztése</h3>
+  <form (ngSubmit)="saveEdit()">
+    <input [(ngModel)]="editedPartner.name" name="editName" placeholder="Cégnév" required />
+    <input [(ngModel)]="editedPartner.representative" name="editRepresentative" placeholder="Kapcsolattartó" required />
+    <input [(ngModel)]="editedPartner.taxNumber" name="editTaxNumber" placeholder="Adószám" required />
+    <input [(ngModel)]="editedPartner.companyNumber" name="editCompanyNumber" placeholder="Cégjegyzékszám" required />
+    <input [(ngModel)]="editedPartner.headquarters" name="editHeadquarters" placeholder="Székhely" required />
+    <button type="submit">Mentés</button>
+    <button type="button" (click)="cancelEdit()">Mégse</button>
+  </form>
+</div>
+
+<!-- Új partner hozzáadása -->
+<h3>Új partner hozzáadása</h3>
+<form (ngSubmit)="onSubmit()">
+  <input [(ngModel)]="newPartner.name" name="name" placeholder="Cégnév" required />
+  <input [(ngModel)]="newPartner.representative" name="representative" placeholder="Kapcsolattartó" required />
+  <input [(ngModel)]="newPartner.taxNumber" name="taxNumber" placeholder="Adószám" required />
+  <input [(ngModel)]="newPartner.companyNumber" name="companyNumber" placeholder="Cégjegyzékszám" required />
+  <input [(ngModel)]="newPartner.headquarters" name="headquarters" placeholder="Székhely" required />
+  <button type="submit">Hozzáadás</button>
+</form>
+
+<!-- Egyenlegfeltöltés -->
+<h3>Egyenleg feltöltése</h3>
+<form (ngSubmit)="topUp()">
+  <label>Partner:</label>
+  <select [(ngModel)]="topupPartnerId" name="topupPartner" required>
+    <option [ngValue]="null">-- Válassz partnert --</option>
+    <option *ngFor="let p of partners" [ngValue]="p.id">{{ p.name }}</option>
+  </select>
+
+  <label>Összeg (Ft):</label>
+  <input type="number" [(ngModel)]="topupAmount" name="topupAmount" required />
+
+  <button type="submit">Feltöltés</button>
+</form>

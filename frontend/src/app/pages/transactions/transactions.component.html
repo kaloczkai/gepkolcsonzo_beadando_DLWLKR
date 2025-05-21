@@ -1,0 +1,65 @@
+<h2>Kölcsönzések</h2>
+
+<h3>Új kölcsönzés</h3>
+
+<div *ngIf="errorMessage" style="color: red; font-weight: bold;">
+  {{ errorMessage }}
+</div>
+
+<form (ngSubmit)="createRental()">
+  <label>
+    Partner:
+    <select [(ngModel)]="newRental.partnerId" name="partner" required>
+      <option *ngFor="let p of partners" [value]="p.id">{{ p.name }}</option>
+    </select>
+  </label>
+  <br />
+  <label>
+    Gép:
+    <select [(ngModel)]="newRental.machineId" name="machine" required>
+      <option *ngFor="let m of machines" [value]="m.id">{{ m.code }} - {{ m.name }}</option>
+    </select>
+  </label>
+  <br />
+  <label>
+    Kezdés dátuma:
+    <input type="date" [(ngModel)]="newRental.startDate" name="startDate" required />
+  </label>
+  <br />
+  <button type="submit">Kölcsönzés</button>
+</form>
+
+<hr />
+
+<ul>
+  <li *ngFor="let r of rentals">
+    <p>
+      <strong>Gép:</strong> {{ r.machine.name }}<br />
+      <strong>Partner:</strong> {{ r.partner.name }}<br />
+      <strong>Kezdés:</strong> {{ r.startDate }}
+    </p>
+
+    <div *ngIf="r.returned">
+      <p>
+        <strong>Lezárva:</strong> {{ r.endDate }}<br />
+        <strong>Állapot:</strong> {{ r.intact ? 'Épségben vissza' : 'Sérült' }}
+      </p>
+    </div>
+
+    <div *ngIf="!r.returned">
+      <label>
+        <strong>Visszahozás dátuma:</strong>
+        <input type="date" [(ngModel)]="r.endDate" />
+      </label>
+      <br />
+      <label>
+        <input type="checkbox" [(ngModel)]="r.intact" />
+        Épségben visszakerült
+      </label>
+      <br />
+      <button (click)="closeRental(r)">Lezárás</button>
+    </div>
+
+    <hr />
+  </li>
+</ul>

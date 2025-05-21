@@ -1,0 +1,23 @@
+<h2>Gépek</h2>
+
+<div *ngIf="errorMessage" style="color: red; font-weight: bold;">
+  {{ errorMessage }}
+</div>
+
+<form (ngSubmit)="onSubmit()">
+  <input [(ngModel)]="newMachine.code" name="code" placeholder="Gépkód (6 számjegy)" required />
+  <input [(ngModel)]="newMachine.name" name="name" placeholder="Név" required />
+  <input [(ngModel)]="newMachine.brand" name="brand" placeholder="Márka" required />
+  <input [(ngModel)]="newMachine.type" name="type" placeholder="Típus" required />
+  <input [(ngModel)]="newMachine.powerWatt" name="powerWatt" type="number" placeholder="Teljesítmény (Watt)" />
+  <input [(ngModel)]="newMachine.weightKg" name="weightKg" type="number" placeholder="Súly (kg)" />
+  <input [(ngModel)]="newMachine.deposit" name="deposit" type="number" placeholder="Letét (Ft)" />
+  <input [(ngModel)]="newMachine.dailyRate" name="dailyRate" type="number" placeholder="Napi díj (Ft)" />
+  <button type="submit">Hozzáadás</button>
+</form>
+
+<ul>
+  <li *ngFor="let m of machines">
+    {{ m.code }} – {{ m.name }} ({{ m.type }}) – {{ m.dailyRate }} Ft/nap
+  </li>
+</ul>

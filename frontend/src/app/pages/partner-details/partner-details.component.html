@@ -1,0 +1,64 @@
+<h2>Partner részletei</h2>
+
+<form (ngSubmit)="savePartner()">
+  <label>
+    Cégnév:
+    <input type="text" [(ngModel)]="editablePartner.name" name="name" placeholder="Pl. Kft. neve" required />
+  </label><br />
+
+  <label>
+    Képviselő:
+    <input type="text" [(ngModel)]="editablePartner.contact" name="contact" placeholder="Név" />
+  </label><br />
+
+  <label>
+    Adószám:
+    <input type="text" [(ngModel)]="editablePartner.taxNumber" name="taxNumber" placeholder="Pl. 12345678-1-12" />
+  </label><br />
+
+  <label>
+    Cégjegyzékszám:
+    <input type="text" [(ngModel)]="editablePartner.companyNumber" name="companyNumber" placeholder="Pl. 01-09-123456" />
+  </label><br />
+
+  <label>
+    Székhely:
+    <input type="text" [(ngModel)]="editablePartner.address" name="address" placeholder="Pl. Budapest, Fő utca 1." />
+  </label><br />
+
+  <button type="submit">Mentés</button>
+</form>
+
+<hr />
+<p><strong>Egyenleg:</strong> {{ partner?.balance }} Ft</p>
+
+<h3>Egyenleg feltöltése</h3>
+<form (ngSubmit)="submitTopup()">
+  <label>
+    Összeg:
+    <input type="number" [(ngModel)]="topupAmount" name="amount" placeholder="Pl. 10000" required />
+  </label>
+  <button type="submit">Feltöltés</button>
+</form>
+
+<hr />
+
+<h3>Tranzakciók</h3>
+<form (ngSubmit)="filterTransactions()">
+  <label>
+    Kezdő dátum:
+    <input type="date" [(ngModel)]="fromDate" name="from" />
+  </label>
+  <label>
+    Záró dátum:
+    <input type="date" [(ngModel)]="toDate" name="to" />
+  </label>
+  <button type="submit">Szűrés</button>
+  <button type="button" (click)="clearFilters()">Szűrés törlése</button>
+</form>
+
+<ul>
+  <li *ngFor="let t of transactions">
+    <strong>{{ t.date }}</strong> – {{ t.type === 'deposit' ? 'Befizetés' : 'Kölcsönzés' }} – {{ t.amount }} Ft
+  </li>
+</ul>
